@@ -1,0 +1,65 @@
+.type-writer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(36, 36, 36);
+  color: white;
+
+  h1 {
+    font-size: 4em;
+  }
+
+  h2 {
+    font-size: 3em;
+  }
+
+  h3 {
+    font-size: 2.5em;
+  }
+
+  h4 {
+    font-size: 2.2em;
+  }
+
+  h5 {
+    font-size: 2em;
+  }
+
+  h6 {
+    font-size: 1.8em;
+  }
+
+  p {
+    font-size: 1.5em;
+  }
+
+  a {
+    font-size: 1.2em;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    a {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgb(71, 71, 71);
+      border-radius: 15px;
+      margin: 5px;
+      background-color: rgb(71, 71, 71);
+      color: white;
+      text-decoration: none;
+      text-align: center;
+
+      &:hover {
+        background-color: black;
+      }
+    }
+  }
+}
