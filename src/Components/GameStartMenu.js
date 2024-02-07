@@ -4,10 +4,8 @@ import Game from "./Game";
 function GameStartMenu() {
   const url = window.location.href.split("//")[1];
   const urlList = url.split("/");
-  console.log(urlList);
   const difficulty = urlList[1];
   const [isFirstRun, setIsFirstRun] = useState(true);
-  console.log(isFirstRun);
   const [testingWordList, setTestingWordList] = useState([]);
   const easyWordList = [
     "a",
@@ -107,8 +105,6 @@ function GameStartMenu() {
   }
 
   function main() {
-    console.log(urlList);
-    console.log(urlList[2]);
     if (urlList[2] === null || urlList[2] === undefined) {
       return (
         <div className="game-start-menu">
@@ -123,7 +119,7 @@ function GameStartMenu() {
         </div>
       );
     } else if (urlList[2] === "#") {
-      return <Game />;
+      return <Game words={testingWordList} />;
     } else {
       return (
         <>
