@@ -1,173 +1,3 @@
-// import React, { useState, useEffect } from "react";
-
-// function Game({ words }) {
-//   const url = window.location.href.split("//")[1];
-//   const urlList = url.split("/");
-//   const difficulty = urlList[1];
-//   const [correct, setCorrect] = useState(0);
-//   const [error, setError] = useState(0);
-//   const [inputValue, setInputValue] = useState("");
-//   const [randomWord, setRandomWord] = useState("");
-//   const [isFirstRun, setIsFirstRun] = useState(true);
-//   const [seconds, setSeconds] = useState(0);
-
-//   var hardWordsList = [];
-
-//   var hardIndex = 0;
-//   var randomIndex1 = 0;
-//   var randomIndex2 = 0;
-//   var randomIndex3 = 0;
-//   var randomIndex4 = 0;
-//   var randomIndex5 = 0;
-
-//   useEffect(() => {
-//     const intervalId = setInterval(() => {
-//       // Increment the seconds
-//       setSeconds((prevSeconds) => prevSeconds + 1);
-//     }, 1000); // 1000 milliseconds = 1 second
-
-//     // Cleanup function to clear the interval when component unmounts or timer stops
-//     return () => clearInterval(intervalId);
-//   }, []); // Empty dependency array ensures effect runs only once after the initial render
-
-//   function handleChange(event) {
-//     setInputValue(event.target.value);
-//   }
-
-//   function handleKeyDown(event) {
-//     if (event.key === " " && inputValue.trim() !== "") {
-//       if (difficulty !== "hard") {
-//         if (inputValue.trim() === words[randomIndex1]) {
-//           setCorrect(correct + 1);
-//         } else {
-//           setError(error + 1);
-//         }
-//         randomWordGenerator();
-//       } else {
-//       }
-//       setInputValue("");
-//     } else if (event.key === " " && inputValue.trim() === "") {
-//       setError(error + 1);
-//       setInputValue("");
-//       randomWordGenerator();
-//     }
-//   }
-
-//   function randomWordGenerator() {
-//     if (isFirstRun) {
-//       setIsFirstRun(false);
-//       if (difficulty !== "hard") {
-//         randomIndex1 = Math.floor(Math.random() * words.length);
-//         randomIndex2 = Math.floor(Math.random() * words.length);
-//         randomIndex3 = Math.floor(Math.random() * words.length);
-//         randomIndex4 = Math.floor(Math.random() * words.length);
-//         randomIndex5 = Math.floor(Math.random() * words.length);
-
-//         setRandomWord(
-//           words[randomIndex1] +
-//             " " +
-//             words[randomIndex2] +
-//             " " +
-//             words[randomIndex3] +
-//             " " +
-//             words[randomIndex4] +
-//             " " +
-//             words[randomIndex5]
-//         );
-//       } else {
-//         hardWordsList = words.split(" ");
-//         setRandomWord(
-//           hardWordsList[hardIndex] +
-//             " " +
-//             hardWordsList[hardIndex + 1] +
-//             " " +
-//             hardWordsList[hardIndex + 2] +
-//             " " +
-//             hardWordsList[hardIndex + 3] +
-//             " " +
-//             hardWordsList[hardIndex + 4]
-//         );
-//       }
-//     } else {
-//       if (difficulty !== "hard") {
-//         randomIndex1 = randomIndex2;
-//         randomIndex2 = randomIndex3;
-//         randomIndex3 = randomIndex4;
-//         randomIndex4 = randomIndex5;
-//         randomIndex5 = Math.floor(Math.random() * words.length);
-
-//         setRandomWord(
-//           words[randomIndex1] +
-//             " " +
-//             words[randomIndex2] +
-//             " " +
-//             words[randomIndex3] +
-//             " " +
-//             words[randomIndex4] +
-//             " " +
-//             words[randomIndex5]
-//         );
-//       } else {
-//         hardIndex++;
-//         setRandomWord(
-//           hardWordsList[hardIndex] +
-//             " " +
-//             hardWordsList[hardIndex + 1] +
-//             " " +
-//             hardWordsList[hardIndex + 2] +
-//             " " +
-//             hardWordsList[hardIndex + 3] +
-//             " " +
-//             hardWordsList[hardIndex + 4]
-//         );
-//       }
-//     }
-//   }
-
-//   function main() {
-//     if (seconds < 60) {
-//       return (
-//         <>
-//           <div className="game">
-//             {isFirstRun ? randomWordGenerator() : ""}
-//             <h1>0:{seconds / 10 < 1 ? `0${seconds}` : seconds}</h1>
-//             <h1>{randomWord}</h1>
-//             <input
-//               type="text"
-//               value={inputValue}
-//               onChange={handleChange}
-//               onKeyDown={handleKeyDown}
-//               placeholder="Type here..."
-//             />
-//             <div className="menu">
-//               <a href="/difficulty-menu">Back</a>
-//             </div>
-//             <div className="score">
-//               <h1>Correct: {correct}</h1>
-//               <h1>Error: {error}</h1>
-//             </div>
-//           </div>
-//         </>
-//       );
-//     } else {
-//       return (
-//         <>
-//           <h1>
-//             You got {correct} words correct and {error} wrong in 1 minute
-//           </h1>
-//           <div className="menu">
-//             <a href="/difficulty-menu">Back</a>
-//           </div>
-//         </>
-//       );
-//     }
-//   }
-
-//   return <>{main()}</>;
-// }
-
-// export default Game;
-
 import React, { useState, useEffect } from "react";
 
 function Game({ words }) {
@@ -177,25 +7,122 @@ function Game({ words }) {
   const [correct, setCorrect] = useState(0);
   const [error, setError] = useState(0);
   const [inputValue, setInputValue] = useState("");
-  const [randomWord, setRandomWord] = useState("");
+  const [randomWords, setRandomWords] = useState("");
+  const [wordsCharactersList, setWordsCharactersList] = useState([]);
   const [isFirstRun, setIsFirstRun] = useState(true);
-  const [seconds, setSeconds] = useState(0);
+  const [milliSeconds, setMilliSeconds] = useState(0);
   const [hardWordsList, setHardWordsList] = useState([]);
   const [randomIndices, setRandomIndices] = useState(Array(5).fill(0));
   const [hardIndex, setHardIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [colourList, setColourList] = useState([]);
+  const [isEnd, setIsEnd] = useState(false);
+  const [charactersList, setCharactersList] = useState([]);
+  const [charactersIndex, setCharactersIndex] = useState(0);
+  const [listIndex, setListIndex] = useState(0);
+  var colourIndex = 0;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      // Increment the seconds
-      setSeconds((prevSeconds) => prevSeconds + 1);
-    }, 1000); // 1000 milliseconds = 1 second
+      // Increment the milliseconds
+      if (!isEnd) setMilliSeconds((prevMilliseconds) => prevMilliseconds + 20);
+    }, 20);
 
     // Cleanup function to clear the interval when component unmounts or timer stops
     return () => clearInterval(intervalId);
-  }, []); // Empty dependency array ensures effect runs only once after the initial render
+  }, [isEnd]); // Empty dependency array ensures effect runs only once after the initial render
 
   function handleChange(event) {
-    setInputValue(event.target.value);
+    console.log("changed", event.target.value);
+    setInputValue(event.target.value.trim());
+    console.log("while", charactersIndex, currentIndex + 1);
+    if (currentIndex + 1 > charactersIndex) {
+      setListIndex(listIndex + 1);
+      setCharactersIndex(
+        charactersIndex + wordsCharactersList[listIndex + 1].length
+      );
+    }
+    console.log(
+      charactersIndex,
+      currentIndex + 1,
+      event.target.value,
+      charactersList,
+      listIndex + 1,
+      charactersList[event.target.value.length - 1],
+      event.target.value[event.target.value.length - 1]
+    );
+    if (event.target.value !== " ") {
+      console.log("running");
+      setCurrentIndex(currentIndex + 1);
+      let tempList = colourList;
+      if (event.target.value.length !== 0) {
+        if (
+          event.target.value[event.target.value.length - 1] ===
+          charactersList[event.target.value.length - 1]
+        ) {
+          if (colourList.length < currentIndex + 1) {
+            tempList = tempList.concat(0);
+            setColourList(tempList);
+          } else {
+            tempList[currentIndex + 1] = 0;
+            setColourList(tempList);
+          }
+        } else {
+          if (colourList.length < currentIndex + 1) {
+            tempList = tempList.concat(1);
+            setColourList(tempList);
+          } else {
+            tempList[currentIndex + 1] = 1;
+            setColourList(tempList);
+          }
+        }
+        console.log(tempList);
+      } else {
+        console.log(
+          charactersIndex,
+          currentIndex + 1,
+          event.target.value,
+          charactersList,
+          listIndex + 1,
+          charactersList[event.target.value.length - 1],
+          event.target.value[event.target.value.length - 1]
+        );
+        if (event.target.value === charactersList[0]) {
+          if (colourList.length < currentIndex + 1) {
+            tempList = tempList.concat(0);
+            setColourList(tempList);
+          } else {
+            tempList[currentIndex + 1] = 0;
+            setColourList(tempList);
+          }
+        } else {
+          if (colourList.length < currentIndex + 1) {
+            tempList = tempList.concat(1);
+            setColourList(tempList);
+          } else {
+            tempList[currentIndex + 1] = 1;
+            setColourList(tempList);
+          }
+        }
+        console.log(tempList);
+      }
+    } else {
+      console.log("running2");
+      setListIndex(listIndex + 1);
+      setCharactersIndex(
+        charactersIndex + wordsCharactersList[listIndex + 1].length
+      );
+      setCharactersList(wordsCharactersList[listIndex + 1]);
+      console.log(
+        charactersIndex,
+        currentIndex + 1,
+        event.target.value,
+        charactersList,
+        listIndex + 1,
+        charactersList[event.target.value.length - 1],
+        event.target.value[event.target.value.length - 1]
+      );
+    }
   }
 
   function handleKeyDown(event) {
@@ -207,25 +134,29 @@ function Game({ words }) {
           setError(error + 1);
         }
         randomWordGenerator();
+        setInputValue("");
       } else {
-        console.log(inputValue.trim(), hardWordsList[hardIndex], hardIndex);
         if (inputValue.trim() === hardWordsList[hardIndex]) {
-          setCorrect(correct + 1);
-        } else {
-          setError(error + 1);
+          if (inputValue.trim() === hardWordsList[hardWordsList.length - 1]) {
+            setIsEnd(true);
+          }
+          setInputValue("");
+          randomWordGenerator();
+          setCurrentIndex(currentIndex - 1);
         }
+      }
+    } else if (event.key === " " && inputValue.trim() === "") {
+      if (difficulty !== "hard") {
+        setError(error + 1);
         randomWordGenerator();
       }
       setInputValue("");
-    } else if (event.key === " " && inputValue.trim() === "") {
-      setError(error + 1);
-      setInputValue("");
-      randomWordGenerator();
+    } else if (event.key === "Backspace") {
+      setCurrentIndex(currentIndex - 1);
     }
   }
 
   function randomWordGenerator() {
-    console.log(isFirstRun);
     if (isFirstRun) {
       setIsFirstRun(false);
       if (difficulty !== "hard") {
@@ -233,12 +164,12 @@ function Game({ words }) {
           Math.floor(Math.random() * words.length)
         );
         setRandomIndices(indices);
-        setRandomWord(indices.map((index) => words[index]).join(" "));
+        setRandomWords(indices.map((index) => words[index]).join(" "));
       } else {
         let tempHardWordsList =
           words[Math.floor(Math.random() * words.length)].split(" ");
         setHardWordsList(tempHardWordsList);
-        setRandomWord(
+        setRandomWords(
           tempHardWordsList[hardIndex] +
             " " +
             tempHardWordsList[hardIndex + 1] +
@@ -249,6 +180,13 @@ function Game({ words }) {
             " " +
             tempHardWordsList[hardIndex + 4]
         );
+        setCharactersIndex(
+          tempHardWordsList.map((word) => word.split(""))[listIndex].length
+        );
+        setCharactersList(
+          tempHardWordsList.map((word) => word.split(""))[listIndex]
+        );
+        setWordsCharactersList(tempHardWordsList.map((word) => word.split("")));
       }
     } else {
       if (difficulty !== "hard") {
@@ -257,10 +195,10 @@ function Game({ words }) {
           Math.floor(Math.random() * words.length),
         ];
         setRandomIndices(newIndices);
-        setRandomWord(newIndices.map((index) => words[index]).join(" "));
+        setRandomWords(newIndices.map((index) => words[index]).join(" "));
       } else {
         setHardIndex(hardIndex + 1);
-        setRandomWord(
+        setRandomWords(
           hardWordsList.slice(hardIndex + 1, hardIndex + 6).join(" ")
         );
       }
@@ -268,41 +206,110 @@ function Game({ words }) {
   }
 
   function main() {
-    if (seconds < 60) {
-      return (
-        <>
-          <div className="game">
-            {isFirstRun ? randomWordGenerator() : ""}
-            <h1>0:{seconds / 10 < 1 ? `0${seconds}` : seconds}</h1>
-            <h1>{randomWord}</h1>
-            <input
-              type="text"
-              value={inputValue}
-              onChange={handleChange}
-              onKeyDown={handleKeyDown}
-              placeholder="Type here..."
-            />
+    if (isFirstRun) randomWordGenerator();
+    if (difficulty !== "hard") {
+      if (milliSeconds / 1000 > 60) {
+        return (
+          <>
+            <div className="game">
+              <h2>
+                {milliSeconds / 1000 / 60}:
+                {milliSeconds / 10000 < 1
+                  ? `0${milliSeconds / 1000}`
+                  : milliSeconds / 1000}
+              </h2>
+              <h1>{randomWords}</h1>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Type here..."
+              />
+              <div className="menu">
+                <a href="/difficulty-menu">Back</a>
+              </div>
+              <div className="score">
+                <h1>Correct: {correct}</h1>
+                <h1>Error: {error}</h1>
+              </div>
+            </div>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <h1>
+              You got {correct} words correct and {error} wrong in 1 minute
+            </h1>
             <div className="menu">
               <a href="/difficulty-menu">Back</a>
             </div>
-            <div className="score">
-              <h1>Correct: {correct}</h1>
-              <h1>Error: {error}</h1>
-            </div>
-          </div>
-        </>
-      );
+          </>
+        );
+      }
     } else {
-      return (
-        <>
-          <h1>
-            You got {correct} words correct and {error} wrong in 1 minute
-          </h1>
-          <div className="menu">
-            <a href="/difficulty-menu">Back</a>
-          </div>
-        </>
-      );
+      if (!isEnd) {
+        return (
+          <>
+            <div className="game">
+              <h2>
+                {Math.floor(milliSeconds / 1000 / 60)}:
+                {(milliSeconds / 10000) % 6 < 1
+                  ? `0${Math.floor((milliSeconds / 1000) % 60)}`
+                  : Math.floor((milliSeconds / 1000) % 60)}
+              </h2>
+              <h1>
+                {wordsCharactersList.map((currentWordCharacters, wordIndex) => {
+                  return currentWordCharacters
+                    .map((currentCharacter, index) => {
+                      colourIndex++;
+                      return (
+                        <span
+                          key={wordIndex + "-" + index}
+                          style={{
+                            backgroundColor:
+                              colourList[colourIndex - 1] === 0
+                                ? "green"
+                                : colourList[colourIndex - 1] === 1
+                                ? "red"
+                                : "gray",
+                          }}
+                        >
+                          {currentCharacter}
+                          {/* {console.log(colourList, colourIndex - 1)} */}
+                        </span>
+                      );
+                    })
+                    .concat(<span key={"space-" + wordIndex}> </span>);
+                })}
+              </h1>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Type here..."
+              />
+              <div className="menu">
+                <a href="/difficulty-menu">Back</a>
+              </div>
+            </div>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <h1>
+              Result:{" "}
+              {Math.floor(hardWordsList.length / (milliSeconds / 1000 / 60))}WPM
+            </h1>
+            <div className="menu">
+              <a href="/difficulty-menu">Back</a>
+            </div>
+          </>
+        );
+      }
     }
   }
 
