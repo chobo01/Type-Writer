@@ -32,7 +32,6 @@ function Game({ words }) {
     if (difficulty !== "hard") {
       setInputValue(event.target.value.trim());
     } else {
-      console.log(currentIndex, event.target.value.length);
       setInputValue(event.target.value);
       let tempList = colourList;
       if (event.target.value.length !== 0) {
@@ -162,61 +161,52 @@ function Game({ words }) {
         );
       }
     } else {
-      if (!isEnd) {
-        return (
-          <>
-            <div className="game">
-              <h2>
-                {Math.floor(milliSeconds / 1000 / 60)}:
-                {(milliSeconds / 10000) % 6 < 1
-                  ? `0${Math.floor((milliSeconds / 1000) % 60)}`
-                  : Math.floor((milliSeconds / 1000) % 60)}
-              </h2>
-              <h1>
-                {wordsCharactersList.map((currentCharacter, index) => {
-                  return (
-                    <span
-                      key={index}
-                      style={{
-                        backgroundColor:
-                          colourList[index] === 0
-                            ? "green"
-                            : colourList[index] === 1
-                            ? "red"
-                            : "gray",
-                      }}
-                    >
-                      {currentCharacter}
-                    </span>
-                  );
-                })}
-              </h1>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-                placeholder="Type here..."
-              />
-              <div className="menu">
-                <a href="/difficulty-menu">Back</a>
-              </div>
-            </div>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <h1>
+      return (
+        <>
+          <div className="game">
+            <h2>
+              {Math.floor(milliSeconds / 1000 / 60)}:
+              {(milliSeconds / 10000) % 6 < 1
+                ? `0${Math.floor((milliSeconds / 1000) % 60)}`
+                : Math.floor((milliSeconds / 1000) % 60)}
+            </h2>
+            <h2 style={isEnd ? { display: "block" } : { display: "none" }}>
               Result:{" "}
-              {Math.floor(hardWordsList.length / (milliSeconds / 1000 / 60))}WPM
+              {(hardWordsList.length / (milliSeconds / 1000 / 60)).toFixed(1)}
+              WPM
+            </h2>
+            <h1>
+              {wordsCharactersList.map((currentCharacter, index) => {
+                return (
+                  <span
+                    key={index}
+                    style={{
+                      backgroundColor:
+                        colourList[index] === 0
+                          ? "green"
+                          : colourList[index] === 1
+                          ? "red"
+                          : "gray",
+                    }}
+                  >
+                    {currentCharacter}
+                  </span>
+                );
+              })}
             </h1>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              placeholder="Type here..."
+            />
             <div className="menu">
               <a href="/difficulty-menu">Back</a>
             </div>
-          </>
-        );
-      }
+          </div>
+        </>
+      );
     }
   }
 

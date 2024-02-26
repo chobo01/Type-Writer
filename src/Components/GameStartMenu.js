@@ -71,6 +71,7 @@ function GameStartMenu() {
       "encapsulating the unpredictable essence of existence. In the tapestry of our lives, " +
       "woven with threads of hope and despair, moments flicker like stars in the night sky, " +
       "illuminating our journey. Every decision, every action, shapes our narrative.",
+
     "'The only way to do great work is to love what you do,' remarked Steve Jobs, a " +
       "beacon of innovation and passion. These words echo the profound truth that " +
       "genuine dedication births excellence. Amidst the cacophony of expectations, " +
