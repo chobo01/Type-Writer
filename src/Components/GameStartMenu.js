@@ -76,7 +76,7 @@ function GameStartMenu() {
       "genuine dedication births excellence. Amidst the cacophony of expectations, " +
       "finding one's true calling becomes paramount, a compass guiding through turbulent seas.",
 
-    "'Two roads diverged in a wood, and I— I took the one less traveled by, And that has " +
+    "'Two roads diverged in a wood, and I - I took the one less traveled by, And that has " +
       "made all the difference,' mused Robert Frost, contemplating life's divergent paths. " +
       "The choices we make, the risks we undertake, carve the contours of our destiny. " +
       "Each step forward unfurls a new chapter, laden with possibilities.",
@@ -114,7 +114,7 @@ function GameStartMenu() {
     "'Happiness is not something ready-made. It comes from your own actions,' " +
       "articulated the Dalai Lama, extolling the transformative power of choice. Amidst " +
       "life's tumultuous currents, happiness emerges not as a destination, but as a journey " +
-      "—a tapestry woven with threads of purpose, passion, and resilience.",
+      "- a tapestry woven with threads of purpose, passion, and resilience.",
   ];
 
   // useEffect(() => {
