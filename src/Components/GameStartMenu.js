@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Game from "./Game";
 
-function GameStartMenu() {
+function GameStartMenu({ top10Results, handleSetResults }) {
   const url = window.location.href.split("//")[1];
   const urlList = url.split("/");
   const difficulty = urlList[1];
@@ -77,7 +77,7 @@ function GameStartMenu() {
       "genuine dedication births excellence. Amidst the cacophony of expectations, " +
       "finding one's true calling becomes paramount, a compass guiding through turbulent seas.",
 
-    "'Two roads diverged in a wood, and I - I took the one less traveled by, And that has " +
+    "'Two roads diverged in a wood, and I - I took the one less traveled by, and that has " +
       "made all the difference,' mused Robert Frost, contemplating life's divergent paths. " +
       "The choices we make, the risks we undertake, carve the contours of our destiny. " +
       "Each step forward unfurls a new chapter, laden with possibilities.",
@@ -92,7 +92,7 @@ function GameStartMenu() {
       "authenticity amidst conformity's clamor. In a society awash with expectations, " +
       "embracing one's uniqueness becomes an act of defiance, a rebellion against homogeneity.",
 
-    "'The purpose of our lives is to be happy,' asserted the Dalai Lama, distilling the  " +
+    "'The purpose of our lives is to be happy,' asserted the Dalai Lama, distilling the " +
       "essence of human existence into a singular pursuit. Beneath the tumult of desires " +
       "and obligations, lies the quest for fulfillment, a quest as old as time itself. Amidst " +
       "life's labyrinth, happiness emerges as our guiding star.",
@@ -156,6 +156,10 @@ function GameStartMenu() {
     }
   }
 
+  function handleSetResultsInMenu(result) {
+    handleSetResults(result);
+  }
+
   function main() {
     if (urlList[2] === null || urlList[2] === undefined) {
       return (
@@ -170,11 +174,16 @@ function GameStartMenu() {
         </div>
       );
     } else if (urlList[2] === "#") {
-      return <Game words={testingWordList} />;
+      return (
+        <Game
+          words={testingWordList}
+          top10Results={top10Results}
+          handleSetResults={handleSetResultsInMenu}
+        />
+      );
     } else {
       return (
         <>
-          {console.log(hardWordList)}
           <h1>Sorry Something Went Wrong</h1>
           <div className="menu">
             <a href="/difficulty-menu">Back</a>
